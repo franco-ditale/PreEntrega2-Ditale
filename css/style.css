@@ -5,9 +5,9 @@ body {
     margin: 0;
     box-sizing: border-box;
     font-family: "Kanit", sans-serif;
-    /* background-image: url(https://images.pexels.com/photos/33041/antelope-canyon-lower-canyon-arizona.jpg);
-    background-size: cover; */
-    background-color: rgb(104, 104, 162);
+    background-image: url(https://wallpapers.com/images/hd/spiral-milky-way-galaxy-57bi3fxyfrkifr0t.webp);
+    background-size: cover;
+    /* background-color: rgb(104, 104, 162); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +15,7 @@ body {
 }
 
 .form-is {
-    padding: 75px;
+    padding: 50px;
     border-radius: 50px;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.5);

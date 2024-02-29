@@ -7,7 +7,7 @@ function buscarUsuario(username) {
 }
 
 function buscarContraseña(user, password) {
-    return user && user.contraseñaNueva === password;
+    return user.contraseñaNueva === password;
 }
 
 /* REGISTRO DE USUARIO */
@@ -67,9 +67,60 @@ while (!ingresoParaLogeados) {
         alert("Bienvenido " + ingresarUsuario)
         ingresoParaLogeados = true;
     } else {
-        alert("Datos Incorrectos");
+        alert("contraseña incorrecta");
+        for (let index = 0; index < 3; index++) {
+            ingresarContraseña = prompt ("Ingresa Contraseña");
+            if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
+                alert("Bienvenido " + ingresarUsuario)
+                ingresoParaLogeados = true;
+                break;
+            }else{
+                alert("Te quedan " + (3-index) + " intentos");
+            }
+        }
     }
 
+}
+
+/* CAMBIO DE CONTRASEÑA  */
+
+let resetContraseña = false;
+
+while (!resetContraseña) {
+    let usuarioParaReset = prompt("Ingrese su usuario actual");
+    let emailUsuario = prompt("Ingrese su gmail actual");
+
+    let usuarioEncontrado = buscarUsuario(usuarioParaReset);
+
+    if (usuarioEncontrado && usuarioEncontrado.email === emailUsuario) {
+
+        let cambioDeContraseña = prompt("Ingresar Nueva Contraseña");
+        let cambioDeContraseñaConfirmar = prompt("Confirmar Contraseña");
+
+        // Corregido el operador de comparación (debe ser === en lugar de =)
+        if (cambioDeContraseña === cambioDeContraseñaConfirmar) {
+            usuarioEncontrado.contraseñaNueva = cambioDeContraseña;
+            alert("Has restablecido tu contraseña correctamente");
+            resetContraseña = true;
+            
+            let ingresarUsuario = prompt("Ingresar Usuario");
+            let ingresarContraseña = prompt("Ingresar Contraseña");
+
+            let encontrarUsuario = buscarUsuario(ingresarUsuario);
+
+            if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
+                alert("Bienvenido " + ingresarUsuario)
+                ingresoParaLogeados = true;
+            } else {
+                alert("Datos Incorrectos");
+            }
+            
+        } else {
+            alert("Las contraseñas no coinciden");
+        }
+    } else {
+        alert("Los datos no existen");
+    }
 }
 
 
