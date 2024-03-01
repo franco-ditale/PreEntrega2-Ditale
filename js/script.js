@@ -1,5 +1,3 @@
-alert("Inicio De sesión");
-
 let ingresoParaLogeados = false;
 
 function buscarUsuario(username) {
@@ -29,6 +27,8 @@ function agregarRegistros(cuentasRegistradas, usuario) {
 
 }
 
+alert("Registro de cuenta");
+
 while (continuar) {
     let registrarUsuario = prompt("Elija Usuario");
     let registrarEmail = prompt("Elija Email");
@@ -56,33 +56,33 @@ console.log(cuentasRegistradas);
 
 /* INICIO SESIÓN */
 
-while (!ingresoParaLogeados) {
+alert("Inicio De Sesión")
 
-    let ingresarUsuario = prompt("Ingresar Usuario");
-    let ingresarContraseña = prompt("Ingresar Contraseña");
+function autenticacion() {
+    let intentosRestantes = 3;
 
-    let encontrarUsuario = buscarUsuario(ingresarUsuario);
+    while (intentosRestantes > 0) {
+        let ingresarUsuario = prompt("Ingresar Usuario");
+        let ingresarContraseña = prompt("Ingresar Contraseña");
 
-    if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
-        alert("Bienvenido " + ingresarUsuario)
-        ingresoParaLogeados = true;
-    } else {
-        alert("contraseña incorrecta");
-        for (let index = 0; index < 3; index++) {
-            ingresarContraseña = prompt ("Ingresa Contraseña");
-            if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
-                alert("Bienvenido " + ingresarUsuario)
-                ingresoParaLogeados = true;
-                break;
-            }else{
-                alert("Te quedan " + (3-index) + " intentos");
-            }
+        let encontrarUsuario = buscarUsuario(ingresarUsuario);
+
+        if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
+            alert("Bienvenido " + ingresarUsuario);
+            return;
+        } else {
+            alert("Datos Incorrectos, Tienes " + (intentosRestantes - 1) + " intentos");
+            intentosRestantes--;
         }
     }
 
+    alert("Se acabaron los intentos. Por favor, inténtalo más tarde.");
 }
 
+autenticacion();
+
 /* CAMBIO DE CONTRASEÑA  */
+alert("Cambio de contraseña");
 
 let resetContraseña = false;
 
@@ -97,7 +97,6 @@ while (!resetContraseña) {
         let cambioDeContraseña = prompt("Ingresar Nueva Contraseña");
         let cambioDeContraseñaConfirmar = prompt("Confirmar Contraseña");
 
-        // Corregido el operador de comparación (debe ser === en lugar de =)
         if (cambioDeContraseña === cambioDeContraseñaConfirmar) {
             usuarioEncontrado.contraseñaNueva = cambioDeContraseña;
             alert("Has restablecido tu contraseña correctamente");
