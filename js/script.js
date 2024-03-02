@@ -8,7 +8,12 @@ function buscarContraseña(user, password) {
     return user.contraseñaNueva === password;
 }
 
-/* REGISTRO DE USUARIO */
+function agregarRegistros(cuentasRegistradas, usuario) {
+    return cuentasRegistradas.push(usuario);
+
+}
+
+const cuentasRegistradas = [];
 
 class RegistroCuenta {
     constructor(usuarioNuevo, email, contraseñaNueva, contraseñaConfirmar) {
@@ -19,15 +24,10 @@ class RegistroCuenta {
     }
 }
 
-const cuentasRegistradas = [];
-let continuar = true;
-
-function agregarRegistros(cuentasRegistradas, usuario) {
-    return cuentasRegistradas.push(usuario);
-
-}
+/* REGISTRO DE USUARIO */
 
 alert("Registro de cuenta");
+let continuar = true;
 
 while (continuar) {
     let registrarUsuario = prompt("Elija Usuario");
@@ -58,7 +58,8 @@ console.log(cuentasRegistradas);
 
 alert("Inicio De Sesión")
 
-function autenticacion() {
+function iniciarSesion() {
+
     let intentosRestantes = 3;
 
     while (intentosRestantes > 0) {
@@ -79,48 +80,55 @@ function autenticacion() {
     alert("Se acabaron los intentos. Por favor, inténtalo más tarde.");
 }
 
-autenticacion();
+iniciarSesion();
+
+
 
 /* CAMBIO DE CONTRASEÑA  */
 alert("Cambio de contraseña");
 
-let resetContraseña = false;
+function cambiarContraseña() {
 
-while (!resetContraseña) {
-    let usuarioParaReset = prompt("Ingrese su usuario actual");
-    let emailUsuario = prompt("Ingrese su gmail actual");
+    let resetContraseña = false;
 
-    let usuarioEncontrado = buscarUsuario(usuarioParaReset);
+    while (!resetContraseña) {
+        let usuarioParaReset = prompt("Ingrese su usuario actual");
+        let emailUsuario = prompt("Ingrese su gmail actual");
 
-    if (usuarioEncontrado && usuarioEncontrado.email === emailUsuario) {
+        let usuarioEncontrado = buscarUsuario(usuarioParaReset);
 
-        let cambioDeContraseña = prompt("Ingresar Nueva Contraseña");
-        let cambioDeContraseñaConfirmar = prompt("Confirmar Contraseña");
+        if (usuarioEncontrado && usuarioEncontrado.email === emailUsuario) {
 
-        if (cambioDeContraseña === cambioDeContraseñaConfirmar) {
-            usuarioEncontrado.contraseñaNueva = cambioDeContraseña;
-            alert("Has restablecido tu contraseña correctamente");
-            resetContraseña = true;
-            
-            let ingresarUsuario = prompt("Ingresar Usuario");
-            let ingresarContraseña = prompt("Ingresar Contraseña");
+            let cambioDeContraseña = prompt("Ingresar Nueva Contraseña");
+            let cambioDeContraseñaConfirmar = prompt("Confirmar Contraseña");
 
-            let encontrarUsuario = buscarUsuario(ingresarUsuario);
+            if (cambioDeContraseña === cambioDeContraseñaConfirmar) {
+                usuarioEncontrado.contraseñaNueva = cambioDeContraseña;
+                alert("Has restablecido tu contraseña correctamente");
+                resetContraseña = true;
 
-            if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
-                alert("Bienvenido " + ingresarUsuario)
-                ingresoParaLogeados = true;
+                let ingresarUsuario = prompt("Ingresar Usuario");
+                let ingresarContraseña = prompt("Ingresar Contraseña");
+
+                let encontrarUsuario = buscarUsuario(ingresarUsuario);
+
+                if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
+                    alert("Bienvenido " + ingresarUsuario)
+                    ingresoParaLogeados = true;
+                } else {
+                    alert("Datos Incorrectos");
+                }
+
             } else {
-                alert("Datos Incorrectos");
+                alert("Las contraseñas no coinciden");
             }
-            
         } else {
-            alert("Las contraseñas no coinciden");
+            alert("Los datos no existen");
         }
-    } else {
-        alert("Los datos no existen");
     }
 }
+
+cambiarContraseña();
 
 
 
