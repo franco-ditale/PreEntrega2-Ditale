@@ -1,5 +1,5 @@
 function buscarUsuario(username) {
-    return cuentasRegistradas.find(user => user.usuarioNuevo === username)
+    return cuentasRegistradas.find(user => user.usuarioNuevo === username);
 }
 
 function buscarContraseña(user, password) {
@@ -8,7 +8,6 @@ function buscarContraseña(user, password) {
 
 function agregarRegistros(cuentasRegistradas, usuario) {
     return cuentasRegistradas.push(usuario);
-
 }
 
 const cuentasRegistradas = [];
@@ -24,74 +23,143 @@ class RegistroCuenta {
 
 /* REGISTRO DE USUARIO */
 
-const formulario = document.getElementById("registrationForm");
+document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.getElementById("registrationForm");
+    if (formulario) { // Verificar si el formulario existe en el DOM
+        formulario.addEventListener("submit", crearCuentaAndRedireccion);
+    } else {
+        console.error("No se encontró el formulario de registro en el DOM.");
+    }
 
-formulario.addEventListener("submit", createAccountAndRedirect);
-
-const crearCuentaBtn = document.getElementById("btn-registrar");
-
-crearCuentaBtn.addEventListener("click", function() {
-    createAccountAndRedirect(); 
+    const crearCuentaBtn = document.getElementById("btn-registrar");
+    if (crearCuentaBtn) { // Verificar si el botón de registro existe en el DOM
+        crearCuentaBtn.addEventListener("click", function (event) {
+            crearCuentaAndRedireccion(event); // Pasar el evento como parámetro
+        });
+    } else {
+        console.error("No se encontró el botón de registro en el DOM.");
+    }
 });
 
-function createAccount() {
-    const username = document.getElementById("username").value;
+function crearCuenta() {
+    const username = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
+    const confirmPassword = document.getElementById("password-confirm").value;
 
     if (password === confirmPassword) {
         if (username && email) {
             const usuario = new RegistroCuenta(username, email, password, confirmPassword);
             agregarRegistros(cuentasRegistradas, usuario);
-            console.log(cuentasRegistradas); 
-            return true; 
+            console.log(cuentasRegistradas);
+            return true;
+        } else {
             alert("Por favor, ingresa al menos un nombre de usuario y un correo electrónico.");
-            return false;
         }
     } else {
         alert("Las contraseñas no coinciden");
-        return false;
     }
 }
 
-function createAccountAndRedirect() {
-    if (createAccount()) { 
-        window.location.href = "./index.html"; 
+function crearCuentaAndRedireccion(event) {
+    event.preventDefault(); // Detener el envío del formulario por defecto
+    if (crearCuenta()) {
+        alert("Redireccionando");
+        location.href = "./iniciosesion.html";
+    } else {
+        alert("Algo no funciona");
     }
 }
 
-/* INICIO SESIÓN
+/* INICIO SESIÓN */
 
-alert("Inicio De Sesión")
+function iniciarSesionYRedireccionar() {
+    const username = document.getElementById("username-is").value;
+    const password = document.getElementById("password-is").value;
 
-function iniciarSesion() {
+    if (username && password) {
+        const usuarioEncontrado = buscarUsuario(username);
 
-    let intentosRestantes = 3;
-
-    while (intentosRestantes > 0) {
-        let ingresarUsuario = prompt("Ingresar Usuario");
-        let ingresarContraseña = prompt("Ingresar Contraseña");
-
-        let encontrarUsuario = buscarUsuario(ingresarUsuario);
-
-        if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
-            alert("Bienvenido " + ingresarUsuario);
-            return;
+        if (usuarioEncontrado && buscarContraseña(usuarioEncontrado, password)) {
+            alert("¡Bienvenido " + username + "!");
+            window.location.href = "./main.html"; // Redireccionar a otra sección HTML
         } else {
-            alert("Datos Incorrectos, Tienes " + (intentosRestantes - 1) + " intentos");
-            intentosRestantes--;
+            alert("Datos incorrectos. Por favor, inténtalo nuevamente.");
         }
+    } else {
+        alert("Por favor, ingresa tu nombre de usuario y contraseña.");
     }
-
-    alert("Se acabaron los intentos. Por favor, inténtalo más tarde.");
 }
 
-iniciarSesion();
+document.addEventListener("DOMContentLoaded", function () {
+    const formularioLogin = document.getElementById("formularioInicioSesion");
+    if (formularioLogin) {
+        formularioLogin.addEventListener("submit", function(event) {
+            event.preventDefault();
+            iniciarSesionYRedireccionar();
+        });
+    } else {
+        console.error("No se encontró el formulario de inicio de sesión en el DOM.");
+    }
+
+    const iniciarSesionBtn = document.getElementById("btn-iniciarSesion");
+    if (iniciarSesionBtn) {
+        iniciarSesionBtn.addEventListener("click", function() {
+            iniciarSesionYRedireccionar();
+        });
+    } else {
+        console.error("No se encontró el botón de inicio de sesión en el DOM.");
+    }
+});
 
 
 
-CAMBIO DE CONTRASEÑA 
+/* CAMBIAR CONTRASEÑA */
+
+/* function cambiarContraseña() {
+    const usuarioParaReset = document.getElementById("username-cambiar").value;
+    const emailUsuario = document.getElementById("email-cambiar").value;
+    const cambioDeContraseña = document.getElementById("password-cambiar").value;
+    const cambioDeContraseñaConfirmar = document.getElementById("password-confirm-cambiar").value;
+
+    if (!usuarioParaReset || !emailUsuario || !cambioDeContraseña || !cambioDeContraseñaConfirmar) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    if (cambioDeContraseña !== cambioDeContraseñaConfirmar) {
+        alert("Las contraseñas no coinciden.");
+        return;
+    }
+
+    let usuarioEncontrado = buscarUsuario(usuarioParaReset);
+
+    if (usuarioEncontrado && usuarioEncontrado.email === emailUsuario) {
+        usuarioEncontrado.contraseñaNueva = cambioDeContraseña;
+        alert("Has restablecido tu contraseña correctamente");
+        location.href = "./main.html";
+    } else {
+        alert("Los datos no coinciden o no existen.");
+    }
+}
+
+document.getElementById("btn-cambiar").addEventListener("click", cambiarContraseña); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CAMBIO DE CONTRASEÑA 
 
 alert("Cambio de contraseña");
 
@@ -100,8 +168,8 @@ function cambiarContraseña() {
     let resetContraseña = false;
 
     while (!resetContraseña) {
-        let usuarioParaReset = prompt("Ingrese su usuario actual");
-        let emailUsuario = prompt("Ingrese su gmail actual");
+        const usuarioParaReset = document.getElementById("username-cambiar").value;
+        const emailUsuario = document.getElementById("email-cambiar").value;
 
         let usuarioEncontrado = buscarUsuario(usuarioParaReset);
 
@@ -122,7 +190,7 @@ function cambiarContraseña() {
 
                 if (encontrarUsuario && buscarContraseña(encontrarUsuario, ingresarContraseña)) {
                     alert("Bienvenido " + ingresarUsuario)
-                    ingresoParaLogeados = true;
+        
                 } else {
                     alert("Datos Incorrectos");
                 }

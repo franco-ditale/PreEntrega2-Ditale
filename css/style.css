@@ -84,13 +84,15 @@ body {
     border: none;
     cursor: pointer;
     transition: 0.3s;
+    display: flex;
+    justify-content: center;
 }
 
 .btn:hover {
     background-color: brown;
 }
 
-.btn a {
+.btn p{
     font-size: 19px;
     text-decoration: none;
     color: black;
