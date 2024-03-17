@@ -124,3 +124,11 @@ body {
     margin-top: 15px;
     margin-left: -25px;
 }
+
+
+.titulo{
+    font-size: 70px;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    font-family: "Kanit", sans-serif;
+}
