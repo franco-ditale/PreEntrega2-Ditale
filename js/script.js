@@ -1,8 +1,15 @@
+const registros = []
+
 async function registrarUsuario(usuario) {
     const response = await fetch(`https://lightningneko.com/auth_test?id=${usuario.username}&pass=${usuario.password}`, {
         method: 'POST'
     })
     console.log(autenticarUsuario);
+    
+    if(response.ok){
+        registros.push(usuario)
+        console.log(registros)
+    }
 }
 
 function autenticarUsuario(username, password) {
